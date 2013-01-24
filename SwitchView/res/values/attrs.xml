@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    
+    <declare-styleable name="SwitchView">
+        <attr name="background_switch" format="reference" />
+        <attr name="background_act" format="reference" />
+        <attr name="background_inact" format="reference" />
+        <attr name="text_on" format="string" />
+        <attr name="text_off" format="string" />
+    </declare-styleable>
+
+</resources>
