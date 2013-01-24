@@ -216,6 +216,25 @@ public class SwitchView extends View {
 	}
 	public void setSwitchOn(boolean isOn){
 		this.isOn=isOn;
+		if(isStateListDrawable){
+			
+			int[] state =null ;
+			if(isOn){
+				state= new int[] {android.R.attr.state_selected};
+			}else{
+				state= new int[] {android.R.attr.state_active};
+			}
+			stateListDrawable.setState(state);
+            ConstantState constantState = stateListDrawable.getConstantState();
+            if (constantState instanceof DrawableContainerState) {
+                DrawableContainerState drwblContainerState = (DrawableContainerState)constantState;
+                final Drawable[] drawables = drwblContainerState.getChildren();
+                Drawable drwbl =(isOn)?drawables[0]:drawables[1];
+                if (drwbl instanceof BitmapDrawable)
+                    	img = ((BitmapDrawable)drwbl).getBitmap();
+            }
+            mSwitch.setImg(img);
+		}
 		invalidate();
 	}
 	public boolean isSwitchOn(){
