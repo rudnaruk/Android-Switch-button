@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.Paint.Align;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Drawable.ConstantState;
@@ -73,12 +74,22 @@ public class SwitchView extends View {
 
 	public void setTextOn(String mText_on) {
 		this.mText_on = mText_on;
+		updateTextBound();
 	}
 
 	public void setTextOff(String mText_off) {
 		this.mText_off = mText_off;
+		updateTextBound();
 	}
-
+	private void updateTextBound(){
+		String mString=null;
+		if(mText_on.length()>=mText_off.length()){
+			mString= mText_on;
+		}else{
+			mString =mText_off;
+		}
+		mTextPaint.getTextBounds(mString, 0, mString.length(), text_bounds);
+	}
 	private void init(Context context, AttributeSet attrs){
 		mTextPaint = new TextPaint();
 		mTextPaint.setAntiAlias(true);
@@ -134,6 +145,7 @@ public class SwitchView extends View {
 		setPadding(PADDING, 0, PADDING, 0);
 		npdBounds = new Rect();
 		npdBounds1 =new Rect();
+		mTextPaint.setTextAlign(Align.CENTER);
 	}
 
 	public void setOnSwitchChangeListener(
@@ -170,8 +182,7 @@ public class SwitchView extends View {
 		canvas.drawText(
 				(mSwitch.getX() >= (getWidth() - getPaddingLeft() - getPaddingRight()) / 2) ? mText_on
 						: mText_off,
-				(mSwitch.getX() >= (getWidth() - getPaddingLeft() - getPaddingRight()) / 2) ? -text_bounds
-						.width() : -2, text_bounds.height() / 2, mTextPaint);
+				getPaddingLeft(), text_bounds.height() / 2, mTextPaint);
 		canvas.restore();
 		mSwitch.onDraw(canvas);
 	}
